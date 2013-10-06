@@ -8,7 +8,7 @@ public class Step {
 	public float latEnd; 
 	public float logEnd;
 	public String descr; 
-	public int duration; 
+	public String duration; 
 	
 	
 	public float getLatStart() {
@@ -18,7 +18,7 @@ public class Step {
 		this.latStart = latStart;
 	}
 	public Step(float latStart, float logStart, float latEnd, float logEnd,
-			String descr, int duration,String manuver) {
+			String descr, String duration,String manuver) {
 		super();
 		this.latStart = latStart;
 		this.logStart = logStart;
@@ -55,10 +55,10 @@ public class Step {
 	public void setDescr(String descr) {
 		this.descr = descr;
 	}
-	public int getDuration() {
+	public String getDuration() {
 		return duration;
 	}
-	public void setDuration(int duration) {
+	public void setDuration(String duration) {
 		this.duration = duration;
 	}
 }
