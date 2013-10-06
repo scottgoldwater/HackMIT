@@ -3,44 +3,44 @@ package com.example.proto.pebblego;
 import org.jsoup.Jsoup;
 
 public class Step {
-	public long latStart; 
-	public long logStart;
-	public long latEnd; 
-	public long logEnd;
+	public float latStart; 
+	public float logStart;
+	public float latEnd; 
+	public float logEnd;
 	public String descr; 
 	public int duration; 
 	
 	
-	public long getLatStart() {
+	public float getLatStart() {
 		return latStart;
 	}
 	public void setLatStart(long latStart) {
 		this.latStart = latStart;
 	}
-	public Step(long latStart, long logStart, long latEnd, long logEnd,
+	public Step(float latStart, float logStart, float latEnd, float logEnd,
 			String descr, int duration) {
 		super();
 		this.latStart = latStart;
 		this.logStart = logStart;
 		this.latEnd = latEnd;
 		this.logEnd = logEnd;
-		this.descr = Jsoup.parse(descr).text();
+		this.descr = descr.replaceAll("\\<.*?>","");
 		this.duration = duration;
 	}
 	
-	public long getLogStart() {
+	public float getLogStart() {
 		return logStart;
 	}
 	public void setLogStart(long logStart) {
 		this.logStart = logStart;
 	}
-	public long getLatEnd() {
+	public float getLatEnd() {
 		return latEnd;
 	}
 	public void setLatEnd(long latEnd) {
 		this.latEnd = latEnd;
 	}
-	public long getLogEnd() {
+	public float getLogEnd() {
 		return logEnd;
 	}
 	public void setLogEnd(long logEnd) {

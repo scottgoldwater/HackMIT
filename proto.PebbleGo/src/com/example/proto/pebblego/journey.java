@@ -5,6 +5,12 @@ import java.util.ArrayList;
 public class journey {
 	
 	
+	@Override
+	public String toString() {
+		return "journey [distance=" + distance + ", startPoint=" + startPoint
+				+ ", endPoint=" + endPoint + ", steps=" + steps + "]";
+	}
+
 	public String getDistance() {
 		return distance;
 	}

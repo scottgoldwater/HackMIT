@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.app.Activity;
 import android.view.Menu;
 
@@ -29,11 +30,11 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     Button sendButton ;
     EditText LocationText,DestinationText;
 	
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+       
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
         Button sendButton = (Button) findViewById(R.id.Send);
         LocationText = (EditText) findViewById(R.id.Start_position_input);
         DestinationText = (EditText) findViewById(R.id.destination_input);
@@ -54,7 +55,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
         Destination = DestinationText.getText().toString();
         //do action 
         try {
-			directions(Location, Destination,"","");
+			directions(Location, Destination,"test","test");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,13 +93,12 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     //     sBuf.append("&sensor=true&mode=driving");
     //     parser = new GoogleParser(sBuf.toString());
     //     Route r =  parser.parse();
-    	String.format(URLString, start,dest,mode,language);
+    	//String.format(URLString, start,dest,mode,language);
     	
     	URL url = new URL(URLString);
 
     	
     	HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-    	
     	  if (conn.getResponseCode() != 200) {
     		    throw new IOException(conn.getResponseMessage());
     		  }
@@ -114,25 +114,33 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     		  rd.close();
     		  conn.disconnect();
     	
+    		  
     		  JSONObject jObj = new JSONObject(sb.toString());
-    		  JSONObject route = jObj.getJSONObject("routes");
-    		  JSONArray legs = route.getJSONArray("legs");
+    		  
+    		  JSONArray route = jObj.getJSONArray("routes");
+    		  
+    		  JSONArray legs = route.getJSONObject(0).getJSONArray("legs");
+    		  
     		  JSONObject leg = legs.getJSONObject(0);
     		  
     		  JSONArray steps = leg.getJSONArray("steps");
     		  
     		  journey trip = new journey (leg.getJSONObject("distance").getString("text"), leg.getString("start_address"), leg.getString("end_address"));
     		  
-    		  
+    		  android.util.Log.i("Scott", trip.toString());
     		  for(int i = 0; i<steps.length(); i++)
     		  {
+    			  
     			  JSONObject temp = steps.getJSONObject(i);
-    			  Step step = new Step(temp.getJSONObject("start_location").getLong("lat"),temp.getJSONObject("start_location").getLong("lng"),
-    					  temp.getJSONObject("end_location").getLong("lat"),temp.getJSONObject("end_location").getLong("lng"),
-    					  temp.getString("html_instructions"),temp.getInt(""));
+    			  android.util.Log.i("Scott", temp.toString());
+    			  Step step = new Step(Float.parseFloat(temp.getJSONObject("start_location").getString("lat")),
+    					  Float.parseFloat(temp.getJSONObject("start_location").getString("lng")),
+    					  Float.parseFloat(temp.getJSONObject("end_location").getString("lat")),
+    					  Float.parseFloat(temp.getJSONObject("end_location").getString("lng")),
+    					  temp.getString("html_instructions"),temp.getJSONObject("duration").getInt("value"));
     			  trip.addStep(step);
     		  }
-    		  
+    		  android.util.Log.i("Scott", trip.toString());
     	return trip;
     }
  }

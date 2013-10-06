@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name"> PebbleGo </string>
+
+    <string name="Welcome">s\'il vous plaît , entrez votre location actuel et destination pour avoir des directions en temps-reel envoyer a votre montre pebble.</string>
+    <string name="DirectionHint">7470, rue Lajeunesse, Montreal</string>
+    <string name="currentLocation">A- Location actuel </string>
+    <string name="Destination">B- Destination</string>
+    <string name="Send">Envoyer !</string>
+
+    <string name="action_settings">Reglages</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_splash">Splash</string>
+
+    <string name="Walk">marchez</string>
+    <string name="Bike">aller à vélo</string>
+
+</resources>
