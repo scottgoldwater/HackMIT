@@ -137,7 +137,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     					  Float.parseFloat(temp.getJSONObject("start_location").getString("lng")),
     					  Float.parseFloat(temp.getJSONObject("end_location").getString("lat")),
     					  Float.parseFloat(temp.getJSONObject("end_location").getString("lng")),
-    					  temp.getString("html_instructions"),temp.getJSONObject("duration").getInt("value"));
+    					  temp.getString("html_instructions"),temp.getJSONObject("duration").getInt("value"),temp.optString("maneuver"));
     			  trip.addStep(step);
     		  }
     		  

@@ -18,7 +18,7 @@ public class Step {
 		this.latStart = latStart;
 	}
 	public Step(float latStart, float logStart, float latEnd, float logEnd,
-			String descr, int duration) {
+			String descr, int duration,String manuver) {
 		super();
 		this.latStart = latStart;
 		this.logStart = logStart;
@@ -26,7 +26,10 @@ public class Step {
 		this.logEnd = logEnd;
 		this.descr = descr.replaceAll("\\<.*?>","");
 		this.duration = duration;
+		this.manuver = manuver; 
 	}
+	
+	public String manuver;
 	
 	public float getLogStart() {
 		return logStart;
