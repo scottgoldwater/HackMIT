@@ -1,5 +1,17 @@
 package com.example.proto.pebblego;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -41,10 +53,18 @@ public class MainActivity extends Activity implements View.OnClickListener  {
         Location = LocationText.getText().toString();
         Destination = DestinationText.getText().toString();
         //do action 
-        directions(Location, Destination);
+        try {
+			directions(Location, Destination,"","");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
-    public String URL= "http://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&sensor=true&mode=%s&language=%s";
+    //public static String URLString= "http://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&sensor=true&mode=%s&language=%s";
     
     
     //FINAL STRINGS
@@ -54,9 +74,9 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     public static final String bike = "bicycling";
     
     
-    private static String[] directions(String start, String dest) {
+    private static journey directions(String start, String dest, String language, String mode) throws IOException, JSONException {
     	
-    	
+    	String URLString = "http://maps.googleapis.com/maps/api/directions/json?origin=345%20Marlborough%20Street%20Boston,%20MA%2002115&destination=30%20Fairfield%20Street%20Boston,%20MA%2002116&sensor=true&mode=walking&language=en";
     //     Parser parser;
     //     //https://developers.google.com/maps/documentation/directions/#JSON <- get api
     //     String jsonURL = "http://maps.googleapis.com/maps/api/directions/json?";
@@ -72,8 +92,47 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     //     sBuf.append("&sensor=true&mode=driving");
     //     parser = new GoogleParser(sBuf.toString());
     //     Route r =  parser.parse();
-    
-    	String[] arr = {};  
-    	return arr;
+    	String.format(URLString, start,dest,mode,language);
+    	
+    	URL url = new URL(URLString);
+
+    	
+    	HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+    	
+    	  if (conn.getResponseCode() != 200) {
+    		    throw new IOException(conn.getResponseMessage());
+    		  }
+    	  
+    	  //GET REQUEST
+    	  BufferedReader rd = new BufferedReader(
+    		      new InputStreamReader(conn.getInputStream()));
+    		  StringBuilder sb = new StringBuilder();
+    		  String line;
+    		  while ((line = rd.readLine()) != null) {
+    		    sb.append(line);
+    		  }
+    		  rd.close();
+    		  conn.disconnect();
+    	
+    		  JSONObject jObj = new JSONObject(sb.toString());
+    		  JSONObject route = jObj.getJSONObject("routes");
+    		  JSONArray legs = route.getJSONArray("legs");
+    		  JSONObject leg = legs.getJSONObject(0);
+    		  
+    		  JSONArray steps = leg.getJSONArray("steps");
+    		  
+    		  journey trip = new journey (leg.getJSONObject("distance").getString("text"), leg.getString("start_address"), leg.getString("end_address"));
+    		  
+    		  
+    		  for(int i = 0; i<steps.length(); i++)
+    		  {
+    			  JSONObject temp = steps.getJSONObject(i);
+    			  Step step = new Step(temp.getJSONObject("start_location").getLong("lat"),temp.getJSONObject("start_location").getLong("lng"),
+    					  temp.getJSONObject("end_location").getLong("lat"),temp.getJSONObject("end_location").getLong("lng"),
+    					  temp.getString("html_instructions"),temp.getInt(""));
+    			  trip.addStep(step);
+    		  }
+    		  
+    	return trip;
     }
  }

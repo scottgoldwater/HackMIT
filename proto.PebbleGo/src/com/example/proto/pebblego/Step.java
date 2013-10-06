@@ -1,5 +1,7 @@
 package com.example.proto.pebblego;
 
+import org.jsoup.Jsoup;
+
 public class Step {
 	public long latStart; 
 	public long logStart;
@@ -22,7 +24,7 @@ public class Step {
 		this.logStart = logStart;
 		this.latEnd = latEnd;
 		this.logEnd = logEnd;
-		this.descr = descr;
+		this.descr = Jsoup.parse(descr).text();
 		this.duration = duration;
 	}
 	
