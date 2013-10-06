@@ -130,7 +130,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
         }
         
         try {
-			jour = directions(Location, Destination,mode,lang);
+			jour = directions(Location, Destination, lang, mode);
 			updateDirection(v);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -141,7 +141,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
 		}
     }
     
-    public static String URLString= "http://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&sensor=true&mode=%s&language=%s";
+    //zpublic static String URLString= "http://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&sensor=true&mode=%s&language=%s";
     
     
     //FINAL STRINGS
@@ -153,7 +153,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     
     private static journey directions(String start, String dest, String language, String mode) throws IOException, JSONException {
     	
-    	//String URLString = "http://maps.googleapis.com/maps/api/directions/json?origin=345%20Marlborough%20Street%20Boston,%20MA%2002115&destination=30%20Fairfield%20Street%20Boston,%20MA%2002116&sensor=true&mode=walking&language=en";
+    	String URLString = "http://maps.googleapis.com/maps/api/directions/json?origin=345%20Marlborough%20Street%20Boston,%20MA%2002115&destination=30%20Fairfield%20Street%20Boston,%20MA%2002116&sensor=true&mode=walking&language=en";
     //     Parser parser;
     //     //https://developers.google.com/maps/documentation/directions/#JSON <- get api
     //     String jsonURL = "http://maps.googleapis.com/maps/api/directions/json?";
@@ -169,7 +169,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     //     sBuf.append("&sensor=true&mode=driving");
     //     parser = new GoogleParser(sBuf.toString());
     //     Route r =  parser.parse();
-    String.format(URLString, start,dest,mode,language);
+    //String.format(URLString, start,dest,mode,language);
     	
     	URL url = new URL(URLString);
 
