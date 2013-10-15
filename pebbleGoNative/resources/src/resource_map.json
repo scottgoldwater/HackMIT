@@ -1,0 +1,36 @@
+{
+    "media": [
+        {
+            "defName": "logo_icon",
+            "type": "png",
+            "file": "images/small.png"
+        },
+        {
+            "defName": "depart_icon",
+            "type": "png",
+            "file": "images/monotone_location_pin_marker.png"
+        },
+        {
+            "defName": "final_icon",
+            "type": "png",
+            "file": "images/Actions-flag-black-icon.png"
+        },
+        {
+            "defName": "load_icon",
+            "type": "png",
+            "file": "images/load.png"
+        },
+        {
+            "defName": "go_right",
+            "type": "png",
+            "file": "images/Arrows-Right-circular-icon (1).png"
+        },
+        {
+            "defName": "go_left",
+            "type": "png",
+            "file": "images/Arrows-Left-circular-icon (1).png"
+        }
+    ],
+    "friendlyVersion": "VERSION",
+    "versionDefName": "GO_APP_RESOURCES"
+}
