@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -29,6 +30,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ToggleButton;
 
 public class MainActivity extends Activity implements View.OnClickListener  {
 
@@ -36,7 +38,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     private String Location, Destination ;
     Button sendButton ;
     EditText LocationText,DestinationText;
-    
+    private ToggleButton langugeTog, bikeTog; 
     private static final int GO_ICON_KEY = 0;
     private static final int GO_DIRECTION_KEY = 3;
     private static final int GO_TIME_KEY = 4;
@@ -59,7 +61,8 @@ public class MainActivity extends Activity implements View.OnClickListener  {
         Button sendButton = (Button) findViewById(R.id.Send);
         LocationText = (EditText) findViewById(R.id.Start_position_input);
         DestinationText = (EditText) findViewById(R.id.destination_input);
-
+        langugeTog = (ToggleButton) findViewById(R.id.languangeToggle); 
+        bikeTog = (ToggleButton) findViewById(R.id.Walktoggle);
         sendButton.setOnClickListener(this);
         
         // Pebble event handler
@@ -117,8 +120,8 @@ public class MainActivity extends Activity implements View.OnClickListener  {
         //do action 
         String lang = "en";
         String mode = "walking";
-        boolean isFrench = false; 
-        boolean isBike = false; 
+        boolean isFrench = langugeTog.isChecked(); 
+        boolean isBike = bikeTog.isChecked(); 
         if(isFrench)
         {
         	lang = "fr";
@@ -141,7 +144,7 @@ public class MainActivity extends Activity implements View.OnClickListener  {
 		}
     }
     
-    //zpublic static String URLString= "http://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&sensor=true&mode=%s&language=%s";
+    
     
     
     //FINAL STRINGS
@@ -152,8 +155,8 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     
     
     private static journey directions(String start, String dest, String language, String mode) throws IOException, JSONException {
-    	
-    	String URLString = "http://maps.googleapis.com/maps/api/directions/json?origin=345%20Marlborough%20Street%20Boston,%20MA%2002115&destination=30%20Fairfield%20Street%20Boston,%20MA%2002116&sensor=true&mode=walking&language=en";
+    	String URLString= "http://maps.googleapis.com/maps/api/directions/json?origin=%s&destination=%s&sensor=true&mode=%s&language=%s";	
+    	//String URLString = "http://maps.googleapis.com/maps/api/directions/json?origin=77%20Massachusetts%20Ave%20Cambridge,%20MA%2002139&destination=1%20Silber%20Way%20Boston%20MA%2002215&sensor=true&mode=walking&language=en";
     //     Parser parser;
     //     //https://developers.google.com/maps/documentation/directions/#JSON <- get api
     //     String jsonURL = "http://maps.googleapis.com/maps/api/directions/json?";
@@ -169,8 +172,13 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     //     sBuf.append("&sensor=true&mode=driving");
     //     parser = new GoogleParser(sBuf.toString());
     //     Route r =  parser.parse();
-    //String.format(URLString, start,dest,mode,language);
-    	
+    	start = URLEncoder.encode(start, "ISO-8859-1");
+    	dest = URLEncoder.encode(dest, "ISO-8859-1");
+    	mode = URLEncoder.encode(mode, "ISO-8859-1");
+    	language = URLEncoder.encode(language, "ISO-8859-1");
+    	  URLString = String.format(URLString, start, dest, mode, language);
+    	   
+    	  android.util.Log.i("Scott", URLString);
     	URL url = new URL(URLString);
 
     	
@@ -193,7 +201,12 @@ public class MainActivity extends Activity implements View.OnClickListener  {
     		  
     		  JSONObject jObj = new JSONObject(sb.toString());
     		  
-    		  JSONArray route = jObj.getJSONArray("routes");
+    		  JSONArray route = jObj.optJSONArray("routes");
+    		  if(route==null)
+    		  {
+    			  return new journey ("404 address not found", "", "");
+    			  
+    		  }
     		  
     		  JSONArray legs = route.getJSONObject(0).getJSONArray("legs");
     		  

@@ -27,7 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/start_position_text"
-        android:hint="@string/DirectionHint" />
+        android:hint="@string/start"
+        />
+        
 
     <TextView
         android:id="@+id/destination_text"
@@ -37,58 +39,42 @@
         android:layout_marginTop="30dp"
         android:text="@string/Destination" />
     
-    
     <EditText
         android:id="@+id/destination_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/destination_text"
-        android:hint="@string/DirectionHint" />
-
-    <Button
-        android:id="@+id/Send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="78dp"
-        android:text="@string/Send" />
+        android:hint="@string/bu"
+      />
 
     <ToggleButton
-        android:id="@+id/toggleButton1"
+        android:id="@+id/languangeToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/destination_input"
         android:layout_below="@+id/destination_input"
         android:layout_marginTop="24dp"
-        android:text="ToggleButton" />
+        android:text="ToggleButton"
+        android:textOff="EN"
+        android:textOn="FR" />
 
     <ToggleButton
-        android:id="@+id/toggleButton2"
+        android:id="@+id/Walktoggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/toggleButton1"
-        android:layout_below="@+id/toggleButton1"
+        android:layout_alignLeft="@+id/languangeToggle"
+        android:layout_below="@+id/languangeToggle"
         android:layout_marginTop="19dp"
-        android:text="ToggleButton" />
+        android:text="ToggleButton"
+        android:textOff="Walk"
+        android:textOn="Bike" />
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/Send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Send"
-        android:layout_toRightOf="@+id/toggleButton1"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/toggleButton2"
-        android:layout_alignBottom="@+id/toggleButton2"
-        android:layout_alignLeft="@+id/textView1"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_alignRight="@+id/Start_position_input"
+        android:layout_alignTop="@+id/Walktoggle"
+        android:text="@string/Send" />
 
 </RelativeLayout>
